@@ -74,7 +74,7 @@ def PERF_TEST(epochs,nums,fn) :
     return ave / epochs , call/epochs
 
 #---------------測試參數----------------------
-execution_times = 21 #資料量步數增加的次數
+execution_times = 26 #資料量步數增加的次數
 step = 0.2 #資料量步數 以10**step增加
 epochs = 100 #測試樣本數 
 #最大資料量 = 10**(step*(execution_times-1))
@@ -105,6 +105,8 @@ for times in range(execution_times) :
     
     axis_size.append(size)
 
+#比較執行時間
+plt.title("Time Performance")
 plt.plot(axis_size,axis_Hoare ,color='blue' ,label = "Hoare")
 plt.plot(axis_size,axis_Lomuto ,color='red' ,label = "Lomuto")
 plt.xlabel('Elements', fontsize="10") # 設定 x 軸標題內容及大小
@@ -112,7 +114,8 @@ plt.ylabel('Time(sec)', fontsize="10") # 設定 y 軸標題內容及大小
 plt.legend()
 plt.show()
 
-
+#比較交換次數
+plt.title("Call Swap")
 plt.plot(axis_size,axis_Hoare_Call ,color='blue' ,label = "Hoare")
 plt.plot(axis_size,axis_Lomuto_Call ,color='red' ,label = "Lomuto")
 plt.xlabel('Elements', fontsize="10") # 設定 x 軸標題內容及大小
