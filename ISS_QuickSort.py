@@ -97,7 +97,7 @@ plt.legend()
 plt.show()
 
 #M的表現曲線
-axis_ISS_Last = [i[-1] for i in axis_ISS]
+axis_ISS_Last = [i[-1] for i in axis_ISS] #只取最大資料量時的表現
 plt.plot(par_M,axis_ISS_Last,color="red",label= "Performance Curve with M",marker="o")
 plt.xlabel('M', fontsize="10") # 設定 x 軸標題內容及大小
 plt.ylabel('Time(sec)', fontsize="10") # 設定 y 軸標題內容及大小
