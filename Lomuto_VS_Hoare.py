@@ -44,25 +44,34 @@ def LOMUTO_QUICKSORT(nums, p, r) :
     LOMUTO_QUICKSORT(nums, p, pivot-1)
     LOMUTO_QUICKSORT(nums, pivot+1, r)
 
-def PERF_TEST(epochs,nums,fn) :
-    ave = 0
-    global call
-    call = 0
-    for epoch in tqdm(range(epochs)) :
-        num = nums[:]
+def PERF_TEST(epochs,size,*function,**keys) : #測試函數 輸入排序函數與其keyword即可
+    global call 
+    ave = np.zeros(len(function))
+    calls = np.zeros(len(function))
+    for epoch in tqdm(range(epochs),desc=str(size)) :
+        nums = [ randint(0,10**6) for i in range(size)] #產生隨機資料
+        #randint(0,10**6)
+        for i in range(len(function))  :
+            call = 0
+            fn = function[i]
+            num = nums[:]
         
-        beg = time.perf_counter()        
-        fn(num, 0, len(num)-1)        
-        end = time.perf_counter()        
-        
-        ave += end - beg
-    return ave / epochs , call/epochs
+            beg = time.perf_counter()        
+            fn(num, 0, len(num)-1, **keys)   
+            
+            end = time.perf_counter()        
+
+            ave[i] += end - beg
+            calls[i] += call
+    
+    return ave / epochs , calls/epochs
 
 #---------------測試參數----------------------
-execution_times = 26 #資料量步數增加的次數
+execution_times = 6 #資料量步數增加的次數
 step = 0.2 #資料量步數 以10**step增加
 epochs = 100 #測試樣本數 
-#最大資料量 = 10**(step*(execution_times-1))
+base = 3
+#最大資料量 = 10**(base + step*(execution_times-1))
 #---------------------------------------------
 
 axis_Lomuto = [] #Lomuto所需時間
@@ -70,24 +79,16 @@ axis_Hoare = [] #Hoare所需時間
 
 axis_Lomuto_Call = [] #Lomuto交換次數
 axis_Hoare_Call = [] #Hoare交換次數
-
-axis_size = [] #資料大小
+axis_size = [] #資料大小軸
 
 for times in range(execution_times) :
-    size = int(10**(times*step)) #資料大小
-    nums = [randint(0,10**6)  for i in range(size)] #產生隨機資料
-    #randint(0,10**6)
+    size = int(10**(times*step+base)) #資料大小
     
-    #HOARE_QUICKSORT測試
-    t,c = PERF_TEST(epochs, nums, HOARE_QUICKSORT)
-    axis_Hoare.append(t)
-    axis_Hoare_Call.append(c)
-    
-    #LOMUTO_QUICKSORT測試
-    t,c = PERF_TEST(epochs, nums, LOMUTO_QUICKSORT)
-    axis_Lomuto.append(t)
-    axis_Lomuto_Call.append(c)
-    
+    T,C = PERF_TEST(epochs, size, HOARE_QUICKSORT, LOMUTO_QUICKSORT)
+    axis_Lomuto.append(T[1])
+    axis_Lomuto_Call.append(C[1])
+    axis_Hoare.append(T[0])
+    axis_Hoare_Call.append(C[[0]])
     axis_size.append(size)
 
 #比較執行時間
