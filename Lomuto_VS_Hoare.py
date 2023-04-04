@@ -2,7 +2,6 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
-
 from tqdm import tqdm
 
 call = 0
