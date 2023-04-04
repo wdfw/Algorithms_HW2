@@ -2,8 +2,9 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
-from math import log 
+
 from tqdm import tqdm
+
 call = 0
 def SWAP(nums, i, j) :
     global call
@@ -31,14 +32,6 @@ def HOARE_PARTITION(nums, p, r) :
         while nums[i] < x : i += 1
         if i >= j : return j
         else : SWAP(nums,i,j) 
-            
-def INSERTION_SORT(nums, p, r) :
-    for i in range(p+1,r+1) :
-        k = nums[i]
-        while nums[i-1] > k and i-1 >= 0:
-            nums[i] = nums[i-1]
-            i -= 1
-        nums[i] = k
 
 def HOARE_QUICKSORT(nums, p, r) :
     if r <= p : return
@@ -51,13 +44,6 @@ def LOMUTO_QUICKSORT(nums, p, r) :
     pivot  = LOMUTO_PARTITION(nums, p, r)
     LOMUTO_QUICKSORT(nums, p, pivot-1)
     LOMUTO_QUICKSORT(nums, pivot+1, r)
-        
-def CHECK(nums) :
-    k = nums[0]
-    for i in nums[1:] :
-        if k > i : return False
-        k = i
-    return True
 
 def PERF_TEST(epochs,nums,fn) :
     ave = 0
@@ -89,8 +75,8 @@ axis_Hoare_Call = [] #Hoare交換次數
 axis_size = [] #資料大小
 
 for times in range(execution_times) :
-    size = int(10**(times*step))
-    nums = [randint(0,10**6)  for i in range(size)]
+    size = int(10**(times*step)) #資料大小
+    nums = [randint(0,10**6)  for i in range(size)] #產生隨機資料
     #randint(0,10**6)
     
     #HOARE_QUICKSORT測試
