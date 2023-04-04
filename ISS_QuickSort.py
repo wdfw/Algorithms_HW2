@@ -1,3 +1,9 @@
+import time
+import matplotlib.pyplot as plt
+import numpy as np
+from random import randint
+from tqdm import tqdm
+
 def SWAP(nums, i, j) :
     nums[i],nums[j] = nums[j],nums[i]
 
